@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d18">
+<meta name="description" content="NBA 球員價值分類分析：使用 WEKA J48 決策樹比較原始模型與 ValueIndex 模型。">
+<title>NBA 球員價值分類分析 | zhaixing.portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080d18;--panel:#101827;--text:#edf4ff;--muted:#93a2b8;--line:rgba(148,170,204,.16);--blue:#65a8ff;--cyan:#62e4e8;--max:1100px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 5%,rgba(27,86,160,.2),transparent 34%),var(--bg);color:var(--text);font-family:Manrope,'Noto Sans TC',sans-serif;line-height:1.7}
+a{color:inherit;text-decoration:none}.wrap{width:min(var(--max),calc(100% - 44px));margin:auto}
+.mono,.eyebrow{font-family:'DM Mono',monospace}.nav{height:74px;border-bottom:1px solid var(--line);display:flex;align-items:center}
+.nav-inner{display:flex;align-items:center;justify-content:space-between}.brand{font-size:18px;font-weight:800;letter-spacing:-.05em}.brand span{color:var(--blue)}
+.back{font-size:12px;color:#a9c7ed;border:1px solid var(--line);padding:8px 13px;border-radius:7px}
+.hero{padding:80px 0 55px;border-bottom:1px solid var(--line)}
+.kicker{font:11px 'DM Mono',monospace;letter-spacing:.15em;color:var(--cyan)}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.2;letter-spacing:-.06em;margin:18px 0}
+.lead{max-width:760px;color:#aab9ce;font-size:15px;line-height:2}
+.tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}.tags span{font:10px 'DM Mono',monospace;border:1px solid rgba(126,160,207,.2);color:#a9c5e6;padding:6px 9px;border-radius:4px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:35px 0 0}
+.stat{border:1px solid var(--line);border-radius:10px;padding:19px;background:rgba(16,24,39,.65)}
+.stat strong{font:700 clamp(24px,3vw,34px) 'DM Mono',monospace;color:#8fc2ff;display:block}
+.stat span{font-size:11px;color:var(--muted)}
+section{padding:55px 0;border-bottom:1px solid var(--line)}
+.section-title{font-size:23px;margin:0 0 12px}.section-copy{font-size:13px;color:var(--muted);max-width:780px}
+.viewer{margin-top:22px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0d1523}
+.viewer-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:11px;color:#a9bad0}
+.viewer-actions{display:flex;gap:9px;flex-wrap:wrap}.action{border:1px solid rgba(101,168,255,.3);padding:7px 10px;border-radius:6px;color:#b9d6ff;font-size:10px}
+iframe{display:block;width:100%;height:780px;border:0;background:#101827}
+.download-panel{display:flex;justify-content:space-between;align-items:center;gap:20px;border:1px solid var(--line);background:rgba(16,24,39,.7);border-radius:10px;padding:22px}
+.download-panel p{margin:3px 0 0;color:var(--muted);font-size:11px}
+.download-btn{white-space:nowrap;background:linear-gradient(110deg,#428cf2,#5eb9e8);color:#07111f;padding:11px 15px;border-radius:7px;font-size:11px;font-weight:800}
+.footer{padding:25px 0;color:#6f829d;font:10px 'DM Mono',monospace}
+@media(max-width:650px){.stats{grid-template-columns:1fr}.hero{padding:58px 0 40px}iframe{height:570px}.download-panel{align-items:flex-start;flex-direction:column}.download-btn{width:100%;text-align:center}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="wrap nav-inner"><a class="brand" href="../index.html">zhaixing<span>.</span>portfolio</a><a class="back" href="../index.html#projects">← 返回作品目錄</a></div></header>
+<main>
+<div class="hero"><div class="wrap">
+<div class="kicker">FEATURED PROJECT / 001 · DATA ANALYSIS</div>
+<h1>NBA 球員價值分類分析</h1>
+<p class="lead">原始模型 vs. ValueIndex 模型比較。使用 WEKA J48 決策樹演算法，探討球員薪資與場上表現的關聯性，並以財金效率指標 ValueIndex 作為模型比較的核心。</p>
+<div class="tags"><span>WEKA</span><span>J48 DECISION TREE</span><span>VALUEINDEX</span><span>NBA DATA</span><span>COURSE PROJECT</span></div>
+<div class="stats">
+<div class="stat"><strong>51</strong><span>NBA 球員樣本</span></div>
+<div class="stat"><strong>56.86%</strong><span>原始模型分類準確率</span></div>
+<div class="stat"><strong>96.08%</strong><span>ValueIndex 模型分類準確率</span></div>
+</div>
+</div></div>
+<section><div class="wrap">
+<h2 class="section-title">研究摘要</h2>
+<p class="section-copy">本研究將 NBA 球員視為具有成本與產出的資產，透過得分、籃板、助攻與薪資建立 ValueIndex，並使用 J48 決策樹進行分類。簡報指出，加入 ValueIndex 後，模型準確率由 56.86% 提升至 96.08%，Kappa 係數由約 0.34 提升至 0.94，決策樹結構也更精簡。</p>
+</div></section>
+<section><div class="wrap">
+<h2 class="section-title">簡報線上預覽</h2>
+<p class="section-copy">可直接在此頁翻閱完整 14 頁 PDF，也可以下載原始 PowerPoint 檔案。</p>
+<div class="viewer">
+<div class="viewer-bar"><span>NBA_PLAYER_VALUE_ANALYSIS.PDF</span><div class="viewer-actions"><a class="action" href="../assets/nba-player-value-analysis.pdf" target="_blank" rel="noopener">另開 PDF ↗</a><a class="action" href="../assets/nba-player-value-analysis.pptx" download>下載 PPTX ↓</a></div></div>
+<iframe src="../assets/nba-player-value-analysis.pdf" title="NBA 球員價值分類分析 PDF 預覽"></iframe>
+</div>
+</div></section>
+<section><div class="wrap">
+<div class="download-panel"><div><strong>下載原始簡報</strong><p>PowerPoint 格式，可下載後自行檢視或播放。</p></div><a class="download-btn" href="../assets/nba-player-value-analysis.pptx" download>下載 PowerPoint ↓</a></div>
+</div></section>
+</main>
+<footer class="footer"><div class="wrap">© 2026 ZHAIXING.PORTFOLIO · <a href="../index.html#projects">BACK TO PROJECT DIRECTORY ↑</a></div></footer>
+</body>
+</html>
